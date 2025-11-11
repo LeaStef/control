@@ -158,7 +158,7 @@ class Runner:
         self.trail.set_data(self.trail_data[:,0], self.trail_data[:,1])
         if self.target is not None:
             target = self.target
-            self.target_line.set_data(target)
+            self.target_line.set_data([target[0]], [target[1]])
             
         # update hand trail
         if self.shell.pen_down:
