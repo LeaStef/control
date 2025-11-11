@@ -1,14 +1,19 @@
 import numpy as np
+import os
 
 def get_raw_data(input_name, writebox, spaces=False):
 
-    f = open('tasks/write_data/'+input_name+'.txt', 'r')
-    row = f.readline()
+    # Build an absolute path relative to this script, not the working directory
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(base_dir, input_name + '.txt')
 
-    points = []
-    for row in f:
-        points.append(row.strip('\n').split(','))
-    f.close()
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"Could not find file: {file_path}")
+
+    # Open the file safely using the resolved absolute path
+    with open(file_path, 'r') as f:
+        _ = f.readline()  # skip the first line
+        points = [row.strip('\n').split(',') for row in f]
 
     points = np.array(points, dtype='float')
     points = points[:, :2]
